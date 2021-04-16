@@ -1,0 +1,124 @@
+name: Build, test and publish
+
+on:
+  push:
+  release:
+    types:
+      - published
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    
+    - name: Fetch repository
+      run: git fetch --prune --unshallow
+  
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.9
+      with:
+          versionSpec: '5.x'
+    
+    - name: Use GitVersion
+      id: gitversion  # step id used as reference for output values
+      uses: gittools/actions/gitversion/execute@v0.9.9
+      
+    - name: Output version values 
+      run: |
+        echo "SemVer: ${{ steps.gitversion.outputs.SemVer }}"
+        mkdir -p ./build
+        touch ./build/gitversion.semver.txt
+        echo "${{ steps.gitversion.outputs.SemVer }}" >> ./build/gitversion.semver.txt
+      
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 2.2.108
+        
+    - name: Build Monads
+      run: dotnet build ./src/Monads/Monads.csproj --configuration Release --framework netstandard2.0 --output ../../build /p:Version=${{ steps.gitversion.outputs.SemVer }}
+      
+    - name: Build Monads.FluentAssertions
+      run: dotnet build ./src/Monads.FluentAssertions/Monads.FluentAssertions.csproj --configuration Release --framework netcoreapp2.1 --output ../../build /p:Version=${{ steps.gitversion.outputs.SemVer }}
+        
+    - name: Build Monads.DataOps
+      run: dotnet build ./src/Monads/Monads.csproj --configuration Release --framework netstandard2.0 --output ../../build /p:Version=${{ steps.gitversion.outputs.SemVer }}
+      
+    - name: Build Monads.DataOps.FluentAssertions
+      run: dotnet build ./src/Monads.DataOps.FluentAssertions/Monads.DataOps.FluentAssertions.csproj --configuration Release --framework netcoreapp2.1 --output ../../build /p:Version=${{ steps.gitversion.outputs.SemVer }}
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: build
+        path: ./build
+      
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    
+    - name: Fetch repository
+      run: git fetch --prune
+          
+    - name: Test Monads
+      run: dotnet test ./src/Monads.Tests/Monads.Tests.csproj --configuration Release --results-directory ./tests --logger "trx;LogFileName=Monads.TestsResults.trx"
+      
+    - name: Test Monads.DataOps
+      run: dotnet test ./src/Monads.DataOps.Tests/Monads.DataOps.Tests.csproj --configuration Release --results-directory ./tests --logger "trx;LogFileName=Monads.DataOps.TestsResults.trx"
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v1
+      with:
+        name: tests
+        path: ./tests
+      
+  publish:
+    needs: [build, test]
+    runs-on: ubuntu-latest
+    if: github.event.release != null && github.event.action == 'published'
+    steps:
+    - name: Download build artifacts
+      uses: actions/download-artifact@v1
+      with:
+        name: build
+    
+    - name: Read GitVersion
+      id: gitversion
+      run: echo "::set-output name=semver::$(head -n 1 ./build/gitversion.semver.txt)"
+      
+    - name: Select packages to publish 
+      run: |
+        mkdir -p ./published
+        cp ./build/SoterDevelopment.Monads.${{ steps.gitversion.outputs.SemVer }}.nupkg ./published
+        cp ./build/SoterDevelopment.Monads.FluentAssertions.${{ steps.gitversion.outputs.SemVer }}.nupkg ./published
+        cp ./build/SoterDevelopment.Monads.DataOps.${{ steps.gitversion.outputs.SemVer }}.nupkg ./published
+        cp ./build/SoterDevelopment.Monads.DataOps.FluentAssertions.${{ steps.gitversion.outputs.SemVer }}.nupkg ./published
+        ls ./published
+
+    - name: Upload published packages
+      uses: actions/upload-artifact@v1
+      with:
+        name: published
+        path: ./published
+        
+    - name: Setup NuGet
+      uses: nuget/setup-nuget@v1
+      with:
+        nuget-api-key: ${{ secrets.RC127CZJ }}
+        nuget-version: '5.x'
+      
+    - name: Publish Monads
+      run: nuget push "./published/SoterDevelopment.Monads.${{ steps.gitversion.outputs.SemVer }}.nupkg" -source nuget.org -SkipDuplicate
+      
+    - name: Publish Monads
+      run: nuget push "./published/SoterDevelopment.Monads.FluentAssertions.${{ steps.gitversion.outputs.SemVer }}.nupkg" -source nuget.org -SkipDuplicate
+        
+    - name: Publish Monads.DataOps
+      run: nuget push "./published/SoterDevelopment.Monads.DataOps.${{ steps.gitversion.outputs.SemVer }}.nupkg" -source nuget.org -SkipDuplicate
+        
+    - name: Publish Monads.DataOps
+      run: nuget push "./published/SoterDevelopment.Monads.DataOps.FluentAssertions.${{ steps.gitversion.outputs.SemVer }}.nupkg" -source nuget.org -SkipDuplicate

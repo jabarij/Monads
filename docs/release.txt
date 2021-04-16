@@ -1,0 +1,9 @@
+1. Create release branch as: 'release/X.Y.Z'.
+2. Create pull request from release to master.
+3. Check and merge to master.
+4. Draft a new release GitHub:
+	- tag version: 'vX.Y.Z';
+	- target: master;
+	- release title: 'Release version X.Y.Z';
+	- description line: '* description of the single-issue job done (issue #N);';
+5. Publish release.
