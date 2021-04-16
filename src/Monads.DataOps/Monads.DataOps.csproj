@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>SoterDevelopment.Monads.DataOps</PackageId>
+    <Authors>Bartłomiej Soter (soter.development@gmail.com)</Authors>
+    <Company>SoterDevelopment</Company>
+    <Description>Library containing basic monads for functional-like data operations in objective languages.</Description>
+    <Copyright>Copyright © SoterDevelopment 2021</Copyright>
+    <PackageProjectUrl>https://github.com/jabarij/Monads</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/jabarij/Monads.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>monad editable clearable</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Common\Internals\DotNetExtensions\ActionExtensions.cs" Link="DotNetExtensions\ActionExtensions.cs" />
+    <Compile Include="..\Common\Internals\DotNetExtensions\HashCode.cs" Link="DotNetExtensions\HashCode.cs" />
+    <Compile Include="..\Common\Internals\DotNetExtensions\HashCodeExtensions.cs" Link="DotNetExtensions\HashCodeExtensions.cs" />
+    <Compile Include="..\Common\Internals\DotNetExtensions\Void.cs" Link="DotNetExtensions\Void.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DotNetExtensions\" />
+  </ItemGroup>
+
+</Project>

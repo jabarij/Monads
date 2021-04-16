@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>SoterDevelopment.Monads.FluentAssertions</PackageId>
+    <Authors>Bartłomiej Soter (soter.development@gmail.com)</Authors>
+    <Company>SoterDevelopment</Company>
+    <Description>Library containing fluent assertions to handle SoterDevelopment.Monads monads in unit tests.</Description>
+    <Copyright>Copyright © SoterDevelopment 2021</Copyright>
+    <PackageProjectUrl>https://github.com/jabarij/Monads</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/jabarij/Monads.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>monad either maybe fluent assertion test</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="fluentassertions" Version="5.10.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Monads\Monads.csproj" />
+  </ItemGroup>
+
+</Project>
