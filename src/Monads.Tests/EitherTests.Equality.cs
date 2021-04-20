@@ -27,8 +27,8 @@ namespace Monads.Tests
             public void LeftOfSameValues_ShouldBeEqual()
             {
                 // arrange
-                var left1 = Either<int, string>.Left(1);
-                var left2 = Either<int, string>.Left(1);
+                var left1 = Either<int, int>.Left(1);
+                var left2 = Either<int, int>.Left(1);
 
                 // act
                 // assert
@@ -40,8 +40,8 @@ namespace Monads.Tests
             public void LeftOfDifferentValues_ShouldNotBeEqual()
             {
                 // arrange
-                var left1 = Either<int, string>.Left(1);
-                var left2 = Either<int, string>.Left(2);
+                var left1 = Either<int, int>.Left(1);
+                var left2 = Either<int, int>.Left(2);
 
                 // act
                 // assert
@@ -53,8 +53,8 @@ namespace Monads.Tests
             public void RightOfSameValues_ShouldBeEqual()
             {
                 // arrange
-                var right1 = Either<int, string>.Right("1");
-                var right2 = Either<int, string>.Right("1");
+                var right1 = Either<int, int>.Right(1);
+                var right2 = Either<int, int>.Right(1);
 
                 // act
                 // assert
@@ -66,8 +66,8 @@ namespace Monads.Tests
             public void RightOfDifferentValues_ShouldNotBeEqual()
             {
                 // arrange
-                var right1 = Either<int, string>.Right("1");
-                var right2 = Either<int, string>.Right("2");
+                var right1 = Either<int, int>.Right(1);
+                var right2 = Either<int, int>.Right(2);
 
                 // act
                 // assert

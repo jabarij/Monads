@@ -3,6 +3,7 @@ using FluentAssertions;
 using Monads.TestAbstractions;
 using Monads.FluentAssertions;
 using Xunit;
+using Monads.Extensions;
 
 namespace Monads.Tests
 {
@@ -24,58 +25,62 @@ namespace Monads.Tests
             }
 
             [Fact]
-            public void ParameterlessConstructor_ShouldBeLeft()
+            public void ParameterlessConstructor_ShouldBeLeftOfDefaultValue()
             {
                 // arrange
                 var sut = new Either<int, string>();
 
                 // act
                 // assert
-                sut.Should().BeLeftVariant(because: "{0} is created using parameterless constructor and should be treated as 'left'", sut);
+                sut.Should().BeLeftOf(default(int), because: "{0} is created using parameterless constructor and should be treated as 'left of default({1})'", sut, sut.GetLeftType());
             }
 
             [Fact]
             public void ConstructorWithValueOfLeftType_ShouldBeLeft()
             {
                 // arrange
-                var sut = new Either<int, string>(Fixture.Create<int>());
+                int value = Fixture.Create<int>();
+                var sut = new Either<int, string>(value);
 
                 // act
                 // assert
-                sut.Should().BeLeftVariant(because: "{0} is created using constructor with parameter of left type and should be treated as 'left'", sut);
+                sut.Should().BeLeftOf(value, because: "{0} is created using constructor with parameter of left type and should be treated as 'left of {1}'", sut, value);
             }
 
             [Fact]
             public void ConstructorWithValueOfRightType_ShouldBeRight()
             {
                 // arrange
-                var sut = new Either<int, string>(Fixture.Create<string>());
+                var value = Fixture.Create<string>();
+                var sut = new Either<int, string>(value);
 
                 // act
                 // assert
-                sut.Should().BeRightVariant(because: "{0} is created using constructor with parameter of right type and should be treated as 'right'", sut);
+                sut.Should().BeRightOf(value, because: "{0} is created using constructor with parameter of right type and should be treated as 'right of {1}'", sut, value);
             }
 
             [Fact]
             public void DomesticLeft_ShouldBeLeft()
             {
                 // arrange
-                var sut = Either<int, string>.Left(Fixture.Create<int>());
+                int value = Fixture.Create<int>();
+                var sut = Either<int, int>.Left(value);
 
                 // act
                 // assert
-                sut.Should().BeLeftVariant(because: "{0} is created using domestic Left() method and should be treated as 'left'", sut);
+                sut.Should().BeLeftOf(value, because: "{0} is created using domestic Left() method and should be 'left of {1}'", sut, value);
             }
 
             [Fact]
-            public void DomesticRight_ShouldBeLeft()
+            public void DomesticRight_ShouldBeRight()
             {
                 // arrange
-                var sut = Either<int, string>.Right(Fixture.Create<string>());
+                int value = Fixture.Create<int>();
+                var sut = Either<int, int>.Right(value);
 
                 // act
                 // assert
-                sut.Should().BeRightVariant(because: "{0} is created using domestic Right() method and should be treated as 'right'", sut);
+                sut.Should().BeRightOf(value, because: "{0} is created using domestic Right() method and should be 'right of {1}'", sut, value);
             }
         }
     }

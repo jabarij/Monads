@@ -6,7 +6,7 @@ namespace Monads.Extensions
     [System.Diagnostics.DebuggerStepThrough]
     public static class EitherExtensions
     {
-        public static void Act<TLeft,TRight>(this Either<TLeft, TRight> maybe, Action<TLeft> left, Action<TRight> right) =>
+        public static void Act<TLeft, TRight>(this Either<TLeft, TRight> maybe, Action<TLeft> left, Action<TRight> right) =>
             maybe.Match(
                 left: e => left.ToVoidFunc().Invoke(e),
                 right: e => right.ToVoidFunc().Invoke(e));
@@ -29,12 +29,16 @@ namespace Monads.Extensions
         public static Either<TLeftProjection, TRight> MapLeft<TLeft, TRight, TLeftProjection>(
             this Either<TLeft, TRight> either,
             Func<TLeft, TLeftProjection> map) =>
-            either.Map(map, _ => _);
+            either.Map(
+                left: map,
+                right: Functions.Id);
 
         public static Either<TLeft, TRightProjection> MapRight<TLeft, TRight, TRightProjection>(
             this Either<TLeft, TRight> either,
             Func<TRight, TRightProjection> map) =>
-            either.Map(_ => _, map);
+            either.Map(
+                left: Functions.Id,
+                right: map);
 
         public static TResult Match<TLeft, TMiddle, TRight, TResult>(
             this Either<TLeft, Either<TMiddle, TRight>> either,
@@ -205,5 +209,26 @@ namespace Monads.Extensions
                     right: fifth),
                 right: sixth),
             right: seventh);
+
+        public static Either<TLeft, TRight> Flatten<TLeft, TRight>(this Either<Either<TLeft, TRight>, TRight> either) =>
+            either.Match(
+                left: Functions.Id,
+                right: Either<TLeft, TRight>.Right);
+
+        public static Either<TLeft, TRight> Flatten<TLeft, TRight>(this Either<TLeft, Either<TLeft, TRight>> either) =>
+            either.Match(
+                left: Either<TLeft, TRight>.Left,
+                right: Functions.Id);
+
+        public static Either<TLeft, TRight> Flatten<TLeft, TRight>(this Either<Either<TLeft, TRight>, Either<TLeft, TRight>> either) =>
+            either.Match(
+                left: Functions.Id,
+                right: Functions.Id);
+
+        public static Type GetLeftType<TLeft, TRight>(this Either<TLeft, TRight> _) =>
+            typeof(TLeft);
+
+        public static Type GetRightType<TLeft, TRight>(this Either<TLeft, TRight> _) =>
+            typeof(TRight);
     }
 }

@@ -20,7 +20,7 @@ namespace Monads.Tests
 
                 // act=
                 // assert
-                sut.Should().BeNoneVariant(because: "{0} is of default value and should be treated as 'none'", sut);
+                sut.Should().BeNoneVariant(because: "{0} is of default value and should be 'none'", sut);
             }
 
             [Fact]
@@ -31,18 +31,19 @@ namespace Monads.Tests
 
                 // act
                 // assert
-                sut.Should().BeNoneVariant(because: "{0} is created using parameterless constructor and should be treated as 'none'", sut);
+                sut.Should().BeNoneVariant(because: "{0} is created using parameterless constructor and should be 'none'", sut);
             }
 
             [Fact]
             public void ConstructorWithValue_ShouldBeSome()
             {
                 // arrange
-                var sut = new Maybe<int>(Fixture.Create<int>());
+                int value = Fixture.Create<int>();
+                var sut = new Maybe<int>(value);
 
                 // act
                 // assert
-                sut.Should().BeSomeVariant(because: "{0} is created using constructor with value parameter and should be treated as 'some'", sut);
+                sut.Should().BeSomeOf(value, because: "{0} is created using constructor with value parameter and should be 'some of {1}'", sut, value);
             }
 
             [Fact]
@@ -53,7 +54,7 @@ namespace Monads.Tests
 
                 // act
                 // assert
-                sut.Should().BeNoneVariant(because: "{0} is created using domestic static None() method and should be treated as 'none'", sut);
+                sut.Should().BeNoneVariant(because: "{0} is created using domestic static None() method and should be 'none'", sut);
             }
 
             [Fact]
@@ -71,22 +72,24 @@ namespace Monads.Tests
             public void DomesticSome_ShouldBeSome()
             {
                 // arrange
-                var sut = Maybe<int>.Some(Fixture.Create<int>());
+                int value = Fixture.Create<int>();
+                var sut = Maybe<int>.Some(value);
 
                 // act
                 // assert
-                sut.Should().BeSomeVariant(because: "{0} is created using domestic static Some() method and should be treated as 'some'", sut);
+                sut.Should().BeSomeOf(value, because: "{0} is created using domestic static Some() method and should be treated as 'some of {1}'", sut, value);
             }
 
             [Fact]
             public void GenericSome_ShouldBeSome()
             {
                 // arrange
-                var sut = Maybe.Some(Fixture.Create<int>());
+                int value = Fixture.Create<int>();
+                var sut = Maybe.Some(value);
 
                 // act
                 // assert
-                sut.Should().BeSomeVariant(because: "{0} is created using generic Some<T>() method and should be treated as 'some'", sut);
+                sut.Should().BeSomeOf(value, because: "{0} is created using generic Some<T>() method and should be treated as 'some of {1}'", sut, value);
             }
         }
     }

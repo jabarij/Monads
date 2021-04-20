@@ -46,34 +46,33 @@ namespace Monads.DataOps.Extensions
 
         public static ClearableValue<string> ClearIfNullOrEmpty(this string value) =>
             !string.IsNullOrEmpty(value)
-            ? ClearableValue.Set(value)
+            ? ClearableValue<string>.Set(value)
             : ClearableValue<string>.Clear();
 
         public static ClearableValue<string> ClearIfNullOrWhiteSpace(this string value) =>
             !string.IsNullOrWhiteSpace(value)
-            ? ClearableValue.Set(value)
+            ? ClearableValue<string>.Set(value)
             : ClearableValue<string>.Clear();
 
         public static T ReduceWith<T>(this ClearableValue<T> value, Func<T> clear, Func<T> noAction) =>
             value.Match(
-                set: e => e,
+                set: Functions.Id,
                 clear: clear,
                 noAction: noAction);
 
         public static T Reduce<T>(this ClearableValue<T> value, T clear = default(T), T noAction = default(T)) =>
             value.Match(
-                set: e => e,
+                set: Functions.Id,
                 clear: () => clear,
                 noAction: () => noAction);
 
         public static T? ReduceOrNull<T>(this ClearableValue<T> value, T? clear = null, T? noAction = null) where T : struct =>
-            value
-            .AsNullable()
-            .Reduce(
-                clear: clear,
-                noAction: noAction);
+            value.Match(
+                set: Functions.NullableId,
+                clear: () => clear,
+                noAction: () => noAction);
 
         public static ClearableValue<T?> AsNullable<T>(this ClearableValue<T> value) where T : struct =>
-            value.Map(e => (T?)e);
+            value.Map(Functions.NullableId);
     }
 }
