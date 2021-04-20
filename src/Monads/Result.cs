@@ -29,6 +29,11 @@ namespace Monads
             _isOk = false;
         }
 
+        public Result<TOkResult, TError> Bind<TOkResult>(Func<TOk, Result<TOkResult, TError>> binder) =>
+            _isOk
+            ? binder(_ok)
+            : Result<TOkResult, TError>.Error(_error);
+
         public TResult Match<TResult>(
             Func<TOk, TResult> ok,
             Func<TError, TResult> error) =>
@@ -37,16 +42,16 @@ namespace Monads
             : error(_error);
 
         public Result<TOkProjection, TError> Map<TOkProjection>(
-            Func<TOk, TOkProjection> ok) =>
+            Func<TOk, TOkProjection> mapping) =>
             _isOk
-            ? new Result<TOkProjection, TError>(ok(_ok))
+            ? new Result<TOkProjection, TError>(mapping(_ok))
             : new Result<TOkProjection, TError>(_error);
 
         public Result<TOk, TErrorProjection> MapError<TErrorProjection>(
-            Func<TError, TErrorProjection> map) =>
+            Func<TError, TErrorProjection> mapping) =>
             _isOk
             ? new Result<TOk, TErrorProjection>(_ok)
-            : new Result<TOk, TErrorProjection>(map(_error));
+            : new Result<TOk, TErrorProjection>(mapping(_error));
 
         public static Result<TOk, TError> Ok(TOk ok) =>
             new Result<TOk, TError>(ok);
