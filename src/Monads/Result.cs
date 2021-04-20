@@ -37,9 +37,9 @@ namespace Monads
             : error(_error);
 
         public Result<TOkProjection, TError> Map<TOkProjection>(
-            Func<TOk, TOkProjection> map) =>
+            Func<TOk, TOkProjection> ok) =>
             _isOk
-            ? new Result<TOkProjection, TError>(map(_ok))
+            ? new Result<TOkProjection, TError>(ok(_ok))
             : new Result<TOkProjection, TError>(_error);
 
         public Result<TOk, TErrorProjection> MapError<TErrorProjection>(
@@ -53,12 +53,6 @@ namespace Monads
 
         public static Result<TOk, TError> Error(TError error) =>
             new Result<TOk, TError>(error);
-
-        public static implicit operator Result<TOk, TError>(TOk ok) =>
-            Ok(ok);
-
-        public static implicit operator Result<TOk, TError>(TError error) =>
-            Error(error);
 
         #region Boiler-plate code
 
@@ -92,16 +86,33 @@ namespace Monads
             ? new HashCode().Append(_ok).CurrentHash
             : new HashCode().Append(_error).CurrentHash;
 
-        public static bool operator ==(
-            Result<TOk, TError> left,
-            Result<TOk, TError> right) =>
+        public static bool operator ==(Result<TOk, TError> left, Result<TOk, TError> right) =>
             left.Equals(right);
 
-        public static bool operator !=(
-            Result<TOk, TError> left,
-            Result<TOk, TError> right) =>
+        public static bool operator !=(Result<TOk, TError> left, Result<TOk, TError> right) =>
             !left.Equals(right);
 
+        public static implicit operator Result<TOk, TError>(TOk ok) =>
+            new Result<TOk, TError>(ok);
+
+        public static implicit operator Result<TOk, TError>(TError error) =>
+            new Result<TOk, TError>(error);
+
         #endregion
+    }
+
+    public static class Result
+    {
+        public static Type GetUnderlyingOkType(Type eitherType) =>
+            eitherType.IsGenericType
+            && eitherType.GetGenericTypeDefinition() == typeof(Result<,>)
+            ? eitherType.GetGenericArguments()[0]
+            : null;
+
+        public static Type GetUnderlyingErrorType(Type eitherType) =>
+            eitherType.IsGenericType
+            && eitherType.GetGenericTypeDefinition() == typeof(Result<,>)
+            ? eitherType.GetGenericArguments()[1]
+            : null;
     }
 }

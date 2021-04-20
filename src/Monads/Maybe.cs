@@ -72,9 +72,12 @@ namespace Monads
             !left.Equals(right);
 
         public static implicit operator Maybe<T>(T value) =>
-            Some(value);
+            new Maybe<T>(value);
+
         public static explicit operator T(Maybe<T> maybe) =>
-            maybe.Match(some: e => e, none: () => throw new InvalidOperationException("Cannot reduce None to raw value."));
+            maybe.Match(
+                some: Functions.Id,
+                none: () => throw new InvalidOperationException("Cannot reduce None to raw value."));
 
         #endregion
     }
@@ -92,5 +95,11 @@ namespace Monads
 
         public static Maybe<T> Resolve<T>(T value) where T : class =>
             value != null ? Some(value) : None(value);
+
+        public static Type GetUnderlyingType(Type maybeType) =>
+            maybeType.IsGenericType
+            && maybeType.GetGenericTypeDefinition() == typeof(Maybe<>)
+            ? maybeType.GetGenericArguments()[0]
+            : null;
     }
 }

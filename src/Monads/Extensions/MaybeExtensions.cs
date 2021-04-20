@@ -43,12 +43,15 @@ namespace Monads.Extensions
 
         public static T? ReduceOrNull<T>(this Maybe<T> maybe) where T : struct =>
             maybe.Match(
-                some: e => e,
+                some: Functions.NullableId,
                 none: () => (T?)null);
 
         public static Maybe<T> Flatten<T>(this Maybe<Maybe<T>> maybe) =>
             maybe.Match(
                 some: Functions.Id,
                 none: Maybe<T>.None);
+
+        public static Type GetUnderlyingType<T>(this Maybe<T> _) =>
+            typeof(T);
     }
 }
