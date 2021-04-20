@@ -84,7 +84,7 @@ namespace Monads
         public static Maybe<T> Some<T>(T value) =>
             Maybe<T>.Some(value);
 
-        public static Maybe<T> None<T>(T value = default(T)) =>
+        public static Maybe<T> None<T>(T _ = default(T)) =>
             Maybe<T>.None();
 
         public static Maybe<T> Resolve<T>(T? value) where T : struct =>
