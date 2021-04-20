@@ -30,15 +30,15 @@ namespace Monads.Extensions
             this Either<TLeft, TRight> either,
             Func<TLeft, TLeftProjection> map) =>
             either.Map(
-                left: map,
-                right: Functions.Id);
+                leftMapping: map,
+                rightMapping: Functions.Id);
 
         public static Either<TLeft, TRightProjection> MapRight<TLeft, TRight, TRightProjection>(
             this Either<TLeft, TRight> either,
             Func<TRight, TRightProjection> map) =>
             either.Map(
-                left: Functions.Id,
-                right: map);
+                leftMapping: Functions.Id,
+                rightMapping: map);
 
         public static TResult Match<TLeft, TMiddle, TRight, TResult>(
             this Either<TLeft, Either<TMiddle, TRight>> either,

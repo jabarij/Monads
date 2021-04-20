@@ -26,8 +26,8 @@ namespace Monads.Tests
 
                 // act
                 var result = sut.Map(
-                    left: leftMapper,
-                    right: rightMapper);
+                    leftMapping: leftMapper,
+                    rightMapping: rightMapper);
 
                 // assert
                 result.Should().BeLeftOf(expectedValue);
@@ -46,8 +46,8 @@ namespace Monads.Tests
 
                 // act
                 var result = sut.Map(
-                    left: leftMapper,
-                    right: rightMapper);
+                    leftMapping: leftMapper,
+                    rightMapping: rightMapper);
 
                 // assert
                 result.Should().BeRightOf(expectedValue);
@@ -61,8 +61,8 @@ namespace Monads.Tests
 
                 // act
                 Action map = () => sut.Map<int, double>(
-                    left: _ => _,
-                    right: _ => throw new InvalidOperationException());
+                    leftMapping: _ => _,
+                    rightMapping: _ => throw new InvalidOperationException());
 
                 // assert
                 map.Should().NotThrow(because: "mapping 'left' should not call 'right' mapper function");
@@ -76,8 +76,8 @@ namespace Monads.Tests
 
                 // act
                 Action map = () => sut.Map<int, double>(
-                    left: _ => throw new InvalidOperationException(),
-                    right: _ => _);
+                    leftMapping: _ => throw new InvalidOperationException(),
+                    rightMapping: _ => _);
 
                 // assert
                 map.Should().NotThrow(because: "mapping 'right' should not call 'left' mapper function");

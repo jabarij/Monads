@@ -37,11 +37,11 @@ namespace Monads
             : left(_left);
 
         public Either<TLeftProjection, TRightProjection> Map<TLeftProjection, TRightProjection>(
-            Func<TLeft, TLeftProjection> left,
-            Func<TRight, TRightProjection> right) =>
+            Func<TLeft, TLeftProjection> leftMapping,
+            Func<TRight, TRightProjection> rightMapping) =>
             _isRight
-            ? new Either<TLeftProjection, TRightProjection>(right(_right))
-            : new Either<TLeftProjection, TRightProjection>(left(_left));
+            ? new Either<TLeftProjection, TRightProjection>(rightMapping(_right))
+            : new Either<TLeftProjection, TRightProjection>(leftMapping(_left));
 
         public static Either<TLeft, TRight> Left(TLeft left) =>
             new Either<TLeft, TRight>(left);
