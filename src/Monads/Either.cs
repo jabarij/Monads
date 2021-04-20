@@ -99,4 +99,19 @@ namespace Monads
 
         #endregion
     }
+
+    public static class Either
+    {
+        public static Type GetUnderlyingLeftType(Type eitherType) =>
+            eitherType.IsGenericType
+            && eitherType.GetGenericTypeDefinition() == typeof(Either<,>)
+            ? eitherType.GetGenericArguments()[0]
+            : null;
+
+        public static Type GetUnderlyingRightType(Type eitherType) =>
+            eitherType.IsGenericType
+            && eitherType.GetGenericTypeDefinition() == typeof(Either<,>)
+            ? eitherType.GetGenericArguments()[1]
+            : null;
+    }
 }

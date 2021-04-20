@@ -18,18 +18,13 @@ namespace Monads.Extensions
 
         public static Maybe<T> AsMaybe<T>(this T? value) where T : struct =>
             value.HasValue
-            ? Maybe.Some(value.Value)
-            : Maybe.None<T>();
+            ? Maybe<T>.Some(value.Value)
+            : Maybe<T>.None();
 
         public static Maybe<T> AsMaybe<T>(this T value) where T : class =>
             value is null
-            ? Maybe.None<T>()
-            : Maybe.Some(value);
-
-        public static TResult Match<T, TResult>(this Maybe<T> maybe, Func<T, TResult> some, TResult defaultValue = default(TResult)) =>
-            maybe.Match(
-                some: some,
-                none: () => defaultValue);
+            ? Maybe<T>.None()
+            : Maybe<T>.Some(value);
 
         public static void Act<T>(this Maybe<T> maybe, Action<T> some, Action none) =>
             maybe.Match(
@@ -37,12 +32,26 @@ namespace Monads.Extensions
                 none: () => none.ToVoidFunc().Invoke());
 
         public static T Reduce<T>(this Maybe<T> maybe, T defaultValue = default(T)) =>
-            maybe.Match(e => e, () => defaultValue);
+            maybe.Match(
+                some: Functions.Id,
+                none: () => defaultValue);
 
         public static T ReduceWith<T>(this Maybe<T> maybe, Func<T> defaultValue) =>
-            maybe.Match(e => e, defaultValue);
+            maybe.Match(
+                some: Functions.Id,
+                none: defaultValue);
 
         public static T? ReduceOrNull<T>(this Maybe<T> maybe) where T : struct =>
-            maybe.Match(e => e, () => (T?)null);
+            maybe.Match(
+                some: Functions.NullableId,
+                none: () => (T?)null);
+
+        public static Maybe<T> Flatten<T>(this Maybe<Maybe<T>> maybe) =>
+            maybe.Match(
+                some: Functions.Id,
+                none: Maybe<T>.None);
+
+        public static Type GetUnderlyingType<T>(this Maybe<T> _) =>
+            typeof(T);
     }
 }
