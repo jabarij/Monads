@@ -20,14 +20,19 @@ namespace Monads
             _isSome = true;
         }
 
+        public Maybe<TResult> Bind<TResult>(Func<T, Maybe<TResult>> binder) =>
+            _isSome
+            ? binder(_value)
+            : Maybe<TResult>.None();
+
         public TResult Match<TResult>(Func<T, TResult> some, Func<TResult> none) =>
             _isSome
             ? some(_value)
             : none();
 
-        public Maybe<TProjection> Map<TProjection>(Func<T, TProjection> map) =>
+        public Maybe<TProjection> Map<TProjection>(Func<T, TProjection> mapping) =>
             _isSome
-            ? new Maybe<TProjection>(map(_value))
+            ? new Maybe<TProjection>(mapping(_value))
             : new Maybe<TProjection>();
 
         public static Maybe<T> None() =>
