@@ -60,7 +60,7 @@ namespace Monads.Tests
             }
 
             [Fact]
-            public void DomesticOk_ShouldBeOk()
+            public void DomesticOk_ShouldBeOkResult()
             {
                 // arrange
                 var value = Fixture.Create<string>();
@@ -72,7 +72,7 @@ namespace Monads.Tests
             }
 
             [Fact]
-            public void DomesticError_ShouldBeError()
+            public void DomesticError_ShouldBeErrorResult()
             {
                 // arrange
                 var value = Fixture.Create<string>();
@@ -81,6 +81,30 @@ namespace Monads.Tests
                 // act
                 // assert
                 sut.Should().BeErrorOf(value, because: "{0} is created using domestic Error() method and should be treated as 'error of {1}'", sut, value);
+            }
+
+            [Fact]
+            public void StaticOk_ShouldBeOk()
+            {
+                // arrange
+                var value = Fixture.Create<string>();
+                var sut = Result.Ok(value);
+
+                // act
+                // assert
+                sut.Result.Should().Be(value, because: "{0} is created using static Error<T>() method and should be treated as 'error of {1}'", sut, value);
+            }
+
+            [Fact]
+            public void StaticError_ShouldBeError()
+            {
+                // arrange
+                var value = Fixture.Create<string>();
+                var sut = Result.Error(value);
+
+                // act
+                // assert
+                sut.Result.Should().Be(value, because: "{0} is created using static Error<T>() method and should be treated as 'error of {1}'", sut, value);
             }
         }
     }

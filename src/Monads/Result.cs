@@ -103,11 +103,23 @@ namespace Monads
         public static implicit operator Result<TOk, TError>(TError error) =>
             new Result<TOk, TError>(error);
 
+        public static implicit operator Result<TOk, TError>(ResultOk<TOk> ok) =>
+            Ok(ok.Result);
+
+        public static implicit operator Result<TOk, TError>(ResultError<TError> error) =>
+            Error(error.Result);
+
         #endregion
     }
 
     public static class Result
     {
+        public static ResultOk<TOk> Ok<TOk>(TOk ok) =>
+            new ResultOk<TOk>(ok);
+
+        public static ResultError<TError> Error<TError>(TError error) =>
+            new ResultError<TError>(error);
+
         public static Type GetUnderlyingOkType(Type eitherType) =>
             eitherType.IsGenericType
             && eitherType.GetGenericTypeDefinition() == typeof(Result<,>)

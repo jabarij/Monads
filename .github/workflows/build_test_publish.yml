@@ -43,11 +43,17 @@ jobs:
     - name: Build Monads.FluentAssertions
       run: dotnet build ./src/Monads.FluentAssertions/Monads.FluentAssertions.csproj --configuration Release --framework netcoreapp2.1 --output ../../build /p:Version=${{ steps.gitversion.outputs.SemVer }}
         
+    - name: Build Monads.FSharp
+      run: dotnet build ./src/Monads.FSharp/Monads.FSharp.fsproj --configuration Release --framework netstandard2.0 --output ../../build /p:Version=${{ steps.gitversion.outputs.SemVer }}
+        
     - name: Build Monads.DataOps
-      run: dotnet build ./src/Monads/Monads.csproj --configuration Release --framework netstandard2.0 --output ../../build /p:Version=${{ steps.gitversion.outputs.SemVer }}
+      run: dotnet build ./src/Monads.DataOps/Monads.DataOps.csproj --configuration Release --framework netstandard2.0 --output ../../build /p:Version=${{ steps.gitversion.outputs.SemVer }}
       
     - name: Build Monads.DataOps.FluentAssertions
       run: dotnet build ./src/Monads.DataOps.FluentAssertions/Monads.DataOps.FluentAssertions.csproj --configuration Release --framework netcoreapp2.1 --output ../../build /p:Version=${{ steps.gitversion.outputs.SemVer }}
+        
+    - name: Build Monads.DataOps.FSharp
+      run: dotnet build ./src/Monads.DataOps.FSharp/Monads.DataOps.FSharp.fsproj --configuration Release --framework netstandard2.0 --output ../../build /p:Version=${{ steps.gitversion.outputs.SemVer }}
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v1
@@ -95,8 +101,10 @@ jobs:
         mkdir -p ./published
         cp ./build/SoterDevelopment.Monads.${{ steps.gitversion.outputs.SemVer }}.nupkg ./published
         cp ./build/SoterDevelopment.Monads.FluentAssertions.${{ steps.gitversion.outputs.SemVer }}.nupkg ./published
+        cp ./build/SoterDevelopment.Monads.FSharp.${{ steps.gitversion.outputs.SemVer }}.nupkg ./published
         cp ./build/SoterDevelopment.Monads.DataOps.${{ steps.gitversion.outputs.SemVer }}.nupkg ./published
         cp ./build/SoterDevelopment.Monads.DataOps.FluentAssertions.${{ steps.gitversion.outputs.SemVer }}.nupkg ./published
+        cp ./build/SoterDevelopment.Monads.DataOps.FSharp.${{ steps.gitversion.outputs.SemVer }}.nupkg ./published
         ls ./published
 
     - name: Upload published packages
@@ -114,11 +122,17 @@ jobs:
     - name: Publish Monads
       run: nuget push "./published/SoterDevelopment.Monads.${{ steps.gitversion.outputs.SemVer }}.nupkg" -source nuget.org -SkipDuplicate
       
-    - name: Publish Monads
+    - name: Publish Monads.FluentAssertions
       run: nuget push "./published/SoterDevelopment.Monads.FluentAssertions.${{ steps.gitversion.outputs.SemVer }}.nupkg" -source nuget.org -SkipDuplicate
+      
+    - name: Publish Monads.FSharp
+      run: nuget push "./published/SoterDevelopment.Monads.FSharp.${{ steps.gitversion.outputs.SemVer }}.nupkg" -source nuget.org -SkipDuplicate
         
     - name: Publish Monads.DataOps
       run: nuget push "./published/SoterDevelopment.Monads.DataOps.${{ steps.gitversion.outputs.SemVer }}.nupkg" -source nuget.org -SkipDuplicate
         
-    - name: Publish Monads.DataOps
+    - name: Publish Monads.DataOps.FluentAssertions
       run: nuget push "./published/SoterDevelopment.Monads.DataOps.FluentAssertions.${{ steps.gitversion.outputs.SemVer }}.nupkg" -source nuget.org -SkipDuplicate
+        
+    - name: Publish Monads.DataOps.FSharp
+      run: nuget push "./published/SoterDevelopment.Monads.DataOps.FSharp.${{ steps.gitversion.outputs.SemVer }}.nupkg" -source nuget.org -SkipDuplicate

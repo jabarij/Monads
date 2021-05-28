@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>SoterDevelopment.Monads.DataOps.FSharp</PackageId>
+    <Authors>Bartłomiej Soter (soter.development@gmail.com)</Authors>
+    <Company>SoterDevelopment</Company>
+    <Description>Library for transition between SoterDevelopment.Monads.DataOps objects and their F# equivalents.</Description>
+    <Copyright>Copyright © SoterDevelopment 2021</Copyright>
+    <PackageProjectUrl>https://github.com/jabarij/Monads</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/jabarij/Monads.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>monad editable clearable</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="ClearableValue.fs" />
+    <Compile Include="EditableValue.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Monads.DataOps\Monads.DataOps.csproj" />
+  </ItemGroup>
+
+</Project>

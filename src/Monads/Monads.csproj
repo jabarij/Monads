@@ -11,7 +11,7 @@
     <PackageProjectUrl>https://github.com/jabarij/Monads</PackageProjectUrl>
     <RepositoryUrl>https://github.com/jabarij/Monads.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>monad either maybe</PackageTags>
+    <PackageTags>monad either maybe result</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

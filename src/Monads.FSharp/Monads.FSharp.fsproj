@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>SoterDevelopment.Monads.FSharp</PackageId>
+    <Authors>Bartłomiej Soter (soter.development@gmail.com)</Authors>
+    <Company>SoterDevelopment</Company>
+    <Description>Library for transition between SoterDevelopment.Monads objects and their F# equivalents.</Description>
+    <Copyright>Copyright © SoterDevelopment 2021</Copyright>
+    <PackageProjectUrl>https://github.com/jabarij/Monads</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/jabarij/Monads.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>monad either maybe result</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Either.fs" />
+    <Compile Include="Maybe.fs" />
+    <Compile Include="Result.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Monads\Monads.csproj" />
+  </ItemGroup>
+
+</Project>
