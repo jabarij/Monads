@@ -44,7 +44,7 @@ jobs:
       run: dotnet build ./src/Monads.FluentAssertions/Monads.FluentAssertions.csproj --configuration Release --framework netcoreapp2.1 --output ../../build /p:Version=${{ steps.gitversion.outputs.SemVer }}
         
     - name: Build Monads.FSharp
-      run: dotnet build ./src/Monads.FSharp/Monads.FSharp.csproj --configuration Release --framework netstandard2.0 --output ../../build /p:Version=${{ steps.gitversion.outputs.SemVer }}
+      run: dotnet build ./src/Monads.FSharp/Monads.FSharp.fsproj --configuration Release --framework netstandard2.0 --output ../../build /p:Version=${{ steps.gitversion.outputs.SemVer }}
         
     - name: Build Monads.DataOps
       run: dotnet build ./src/Monads.DataOps/Monads.DataOps.csproj --configuration Release --framework netstandard2.0 --output ../../build /p:Version=${{ steps.gitversion.outputs.SemVer }}
@@ -53,7 +53,7 @@ jobs:
       run: dotnet build ./src/Monads.DataOps.FluentAssertions/Monads.DataOps.FluentAssertions.csproj --configuration Release --framework netcoreapp2.1 --output ../../build /p:Version=${{ steps.gitversion.outputs.SemVer }}
         
     - name: Build Monads.DataOps.FSharp
-      run: dotnet build ./src/Monads.DataOps.FSharp/Monads.DataOps.FSharp.csproj --configuration Release --framework netstandard2.0 --output ../../build /p:Version=${{ steps.gitversion.outputs.SemVer }}
+      run: dotnet build ./src/Monads.DataOps.FSharp/Monads.DataOps.FSharp.fsproj --configuration Release --framework netstandard2.0 --output ../../build /p:Version=${{ steps.gitversion.outputs.SemVer }}
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v1
