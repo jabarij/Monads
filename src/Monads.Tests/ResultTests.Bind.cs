@@ -21,8 +21,8 @@ namespace Monads.Tests
                 var sut = Result<int, string>.Error(originalError);
 
                 // act
-                Result<string, string> result = sut.Bind(
-                    binder: e => Result<string, string>.Ok(e.ToString()));
+                Result<string, string> result = sut.Bind<string>(
+                    binder: e => Result.Ok(e.ToString()));
 
                 // assert
                 result.Should().BeErrorOf(originalError);
@@ -50,7 +50,6 @@ namespace Monads.Tests
                 var sut = Result<int, string>.Ok(value);
                 Func<int, Result<string, string>> binder = e => Result<string, string>.Ok(e.ToString());
                 var expectedResult = binder(value);
-
 
                 // act
                 var result = sut.Bind(binder);
