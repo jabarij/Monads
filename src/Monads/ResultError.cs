@@ -1,6 +1,6 @@
 ﻿namespace Monads
 {
-    public readonly struct ResultError<T>
+    public struct ResultError<T>
     {
         public ResultError(T result)
         {

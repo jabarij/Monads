@@ -1,6 +1,6 @@
 ﻿namespace Monads
 {
-    public readonly struct ResultOk<T>
+    public struct ResultOk<T>
     {
         public ResultOk(T result)
         {
