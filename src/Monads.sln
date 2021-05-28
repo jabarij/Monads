@@ -13,11 +13,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Monads.TestAbstractions", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Monads.Tests", "Monads.Tests\Monads.Tests.csproj", "{635CD199-A333-4246-B3DD-DFE312629F18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monads.FluentAssertions", "Monads.FluentAssertions\Monads.FluentAssertions.csproj", "{B714F3B6-C14B-4633-A5C3-6CF97C31C388}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Monads.FluentAssertions", "Monads.FluentAssertions\Monads.FluentAssertions.csproj", "{B714F3B6-C14B-4633-A5C3-6CF97C31C388}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monads.DataOps.Tests", "Monads.DataOps.Tests\Monads.DataOps.Tests.csproj", "{E9B3E4E7-7B01-4B25-914E-934C6D474259}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Monads.DataOps.Tests", "Monads.DataOps.Tests\Monads.DataOps.Tests.csproj", "{E9B3E4E7-7B01-4B25-914E-934C6D474259}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monads.DataOps.FluentAssertions", "Monads.DataOps.FluentAssertions\Monads.DataOps.FluentAssertions.csproj", "{D912C305-8442-42CC-B1BE-8614363B1BD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Monads.DataOps.FluentAssertions", "Monads.DataOps.FluentAssertions\Monads.DataOps.FluentAssertions.csproj", "{D912C305-8442-42CC-B1BE-8614363B1BD8}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Monads.FSharp", "Monads.FSharp\Monads.FSharp.fsproj", "{D90A9EFA-266C-4AFD-910B-51AC5FB49A50}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Monads.DataOps.FSharp", "Monads.DataOps.FSharp\Monads.DataOps.FSharp.fsproj", "{2EF6D394-40BF-4F36-AF9E-C54C7173CBF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +57,14 @@ Global
 		{D912C305-8442-42CC-B1BE-8614363B1BD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D912C305-8442-42CC-B1BE-8614363B1BD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D912C305-8442-42CC-B1BE-8614363B1BD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D90A9EFA-266C-4AFD-910B-51AC5FB49A50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D90A9EFA-266C-4AFD-910B-51AC5FB49A50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D90A9EFA-266C-4AFD-910B-51AC5FB49A50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D90A9EFA-266C-4AFD-910B-51AC5FB49A50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EF6D394-40BF-4F36-AF9E-C54C7173CBF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EF6D394-40BF-4F36-AF9E-C54C7173CBF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EF6D394-40BF-4F36-AF9E-C54C7173CBF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EF6D394-40BF-4F36-AF9E-C54C7173CBF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
