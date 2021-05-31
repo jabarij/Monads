@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>SoterDevelopment.Monads.DataOps.Json</PackageId>
+    <Authors>Bartłomiej Soter (soter.development@gmail.com)</Authors>
+    <Company>SoterDevelopment</Company>
+    <Description>Library handling JSON serialization/deserialization for Monads.DataOps's objects.</Description>
+    <Copyright>Copyright © SoterDevelopment 2021</Copyright>
+    <PackageProjectUrl>https://github.com/jabarij/Monads</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/jabarij/Monads.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>monad editable clearable json</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Monads.DataOps\Monads.DataOps.csproj" />
+  </ItemGroup>
+
+</Project>
