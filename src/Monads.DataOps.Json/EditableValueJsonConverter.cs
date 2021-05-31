@@ -5,18 +5,8 @@ namespace Monads.DataOps.Json
 {
     public class EditableValueJsonConverter<T> : JsonConverter<EditableValue<T>>
     {
-        private readonly JsonConverter<T> _valueConverter;
-
-        public EditableValueJsonConverter(
-            JsonConverter<T> valueConverter)
-        {
-            _valueConverter = valueConverter;
-        }
-
         public override EditableValue<T> ReadJson(JsonReader reader, Type objectType, EditableValue<T> existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
-            EnsureValueConverter(serializer);
-
             var builder = new EditableValueBuilder<T>();
             if (reader.TokenType == JsonToken.StartObject)
             {
@@ -37,8 +27,6 @@ namespace Monads.DataOps.Json
 
         public override void WriteJson(JsonWriter writer, EditableValue<T> editable, JsonSerializer serializer)
         {
-            EnsureValueConverter(serializer);
-
             writer.WriteStartObject();
 
             string state = editable.Match(
@@ -57,12 +45,6 @@ namespace Monads.DataOps.Json
             }
 
             writer.WriteEndObject();
-        }
-
-        private void EnsureValueConverter(JsonSerializer serializer)
-        {
-            if (_valueConverter != null && !serializer.Converters.Contains(_valueConverter))
-                serializer.Converters.Add(_valueConverter);
         }
     }
 }

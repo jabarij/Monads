@@ -5,18 +5,8 @@ namespace Monads.DataOps.Json
 {
     public class ClearableValueJsonConverter<T> : JsonConverter<ClearableValue<T>>
     {
-        private readonly JsonConverter<T> _valueConverter;
-
-        public ClearableValueJsonConverter(
-            JsonConverter<T> valueConverter)
-        {
-            _valueConverter = valueConverter;
-        }
-
         public override ClearableValue<T> ReadJson(JsonReader reader, Type objectType, ClearableValue<T> existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
-            EnsureValueConverter(serializer);
-
             var builder = new ClearableValueBuilder<T>();
             if (reader.TokenType == JsonToken.StartObject)
             {
@@ -37,8 +27,6 @@ namespace Monads.DataOps.Json
 
         public override void WriteJson(JsonWriter writer, ClearableValue<T> clearable, JsonSerializer serializer)
         {
-            EnsureValueConverter(serializer);
-
             writer.WriteStartObject();
 
             string state = clearable.Match(
@@ -59,12 +47,6 @@ namespace Monads.DataOps.Json
             }
 
             writer.WriteEndObject();
-        }
-
-        private void EnsureValueConverter(JsonSerializer serializer)
-        {
-            if (_valueConverter != null && !serializer.Converters.Contains(_valueConverter))
-                serializer.Converters.Add(_valueConverter);
         }
     }
 }
