@@ -48,6 +48,9 @@ jobs:
         
     - name: Build Monads.DataOps
       run: dotnet build ./src/Monads.DataOps/Monads.DataOps.csproj --configuration Release --framework netstandard2.0 --output ../../build /p:Version=${{ steps.gitversion.outputs.SemVer }}
+        
+    - name: Build Monads.DataOps.Json
+      run: dotnet build ./src/Monads.DataOps.Json/Monads.DataOps.Json.csproj --configuration Release --framework netstandard2.0 --output ../../build /p:Version=${{ steps.gitversion.outputs.SemVer }}
       
     - name: Build Monads.DataOps.FluentAssertions
       run: dotnet build ./src/Monads.DataOps.FluentAssertions/Monads.DataOps.FluentAssertions.csproj --configuration Release --framework netcoreapp2.1 --output ../../build /p:Version=${{ steps.gitversion.outputs.SemVer }}
@@ -75,6 +78,9 @@ jobs:
       
     - name: Test Monads.DataOps
       run: dotnet test ./src/Monads.DataOps.Tests/Monads.DataOps.Tests.csproj --configuration Release --results-directory ./tests --logger "trx;LogFileName=Monads.DataOps.TestsResults.trx"
+      
+    - name: Test Monads.DataOps.Json
+      run: dotnet test ./src/Monads.DataOps.Json.Tests/Monads.DataOps.Json.Tests.csproj --configuration Release --results-directory ./tests --logger "trx;LogFileName=Monads.DataOps.Json.TestsResults.trx"
 
     - name: Upload test results
       uses: actions/upload-artifact@v1
@@ -103,6 +109,7 @@ jobs:
         cp ./build/SoterDevelopment.Monads.FluentAssertions.${{ steps.gitversion.outputs.SemVer }}.nupkg ./published
         cp ./build/SoterDevelopment.Monads.FSharp.${{ steps.gitversion.outputs.SemVer }}.nupkg ./published
         cp ./build/SoterDevelopment.Monads.DataOps.${{ steps.gitversion.outputs.SemVer }}.nupkg ./published
+        cp ./build/SoterDevelopment.Monads.DataOps.Json.${{ steps.gitversion.outputs.SemVer }}.nupkg ./published
         cp ./build/SoterDevelopment.Monads.DataOps.FluentAssertions.${{ steps.gitversion.outputs.SemVer }}.nupkg ./published
         cp ./build/SoterDevelopment.Monads.DataOps.FSharp.${{ steps.gitversion.outputs.SemVer }}.nupkg ./published
         ls ./published
@@ -130,6 +137,9 @@ jobs:
         
     - name: Publish Monads.DataOps
       run: nuget push "./published/SoterDevelopment.Monads.DataOps.${{ steps.gitversion.outputs.SemVer }}.nupkg" -source nuget.org -SkipDuplicate
+        
+    - name: Publish Monads.DataOps.Json
+      run: nuget push "./published/SoterDevelopment.Monads.DataOps.Json.${{ steps.gitversion.outputs.SemVer }}.nupkg" -source nuget.org -SkipDuplicate
         
     - name: Publish Monads.DataOps.FluentAssertions
       run: nuget push "./published/SoterDevelopment.Monads.DataOps.FluentAssertions.${{ steps.gitversion.outputs.SemVer }}.nupkg" -source nuget.org -SkipDuplicate
