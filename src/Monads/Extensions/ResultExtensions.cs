@@ -51,6 +51,21 @@ namespace Monads.Extensions
                 ok: Functions.Id,
                 error: Functions.Id);
 
+        public static Result<TOk, Either<TErrorOuter, TErrorInner>> Flatten<TOk, TErrorOuter, TErrorInner>(this Result<Result<TOk, TErrorInner>, TErrorOuter> result) =>
+            result.Match(
+                ok: inner => inner.Match(
+                    ok: ok => Result<TOk, Either<TErrorOuter, TErrorInner>>.Ok(ok),
+                    error: err => Either<TErrorOuter, TErrorInner>.Right(err)),
+                error: err => Either<TErrorOuter, TErrorInner>.Left(err));
+
+
+        public static Result<TOk, Either<TErrorOuter, TErrorInner>> Bind<TOk, TErrorOuter, TErrorInner>(this Result<TOk, TErrorOuter> result, Func<TOk, Result<TOk, TErrorInner>> binder) =>
+            result.Match(
+                ok: ok => binder(ok).Match(
+                    stillOk => Result<TOk, Either<TErrorOuter, TErrorInner>>.Ok(stillOk),
+                    innerError => Result<TOk, Either<TErrorOuter, TErrorInner>>.Error(innerError)),
+                error: outerError => Either<TErrorOuter, TErrorInner>.Left(outerError));
+
         public static Type GetOkType<TOk, TError>(this Result<TOk, TError> _) =>
             typeof(TOk);
 
