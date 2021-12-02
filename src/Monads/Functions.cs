@@ -15,5 +15,8 @@ namespace Monads
             sideEffect(arg);
             return arg;
         }
+
+        public static T ReturnDefault<T>() =>
+            default(T);
     }
 }
