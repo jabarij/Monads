@@ -21,6 +21,11 @@ namespace Monads.Extensions
                 ok: Functions.Id,
                 error: errorReduction);
 
+        public static TError ReduceError<T, TError>(this Result<T, TError> result, Func<T, TError> okReduction = null) =>
+            result.Match(
+                ok: okReduction ?? Functions.ReturnDefault<T, TError>,
+                error: Functions.Id);
+
         public static T ReduceOrThrow<T, TError, TException>(this Result<T, TError> result, Func<TError, TException> getException) where TException : Exception =>
             result.Match(
                 ok: Functions.Id,
