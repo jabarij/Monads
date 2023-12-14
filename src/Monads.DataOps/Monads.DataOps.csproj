@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>SoterDevelopment.Monads.DataOps</PackageId>
     <Authors>Bartłomiej Soter (soter.development@gmail.com)</Authors>
@@ -16,8 +17,6 @@
 
   <ItemGroup>
     <Compile Include="..\Common\Internals\DotNetExtensions\ActionExtensions.cs" Link="DotNetExtensions\ActionExtensions.cs" />
-    <Compile Include="..\Common\Internals\DotNetExtensions\HashCode.cs" Link="DotNetExtensions\HashCode.cs" />
-    <Compile Include="..\Common\Internals\DotNetExtensions\HashCodeExtensions.cs" Link="DotNetExtensions\HashCodeExtensions.cs" />
     <Compile Include="..\Common\Internals\DotNetExtensions\Void.cs" Link="DotNetExtensions\Void.cs" />
   </ItemGroup>
 

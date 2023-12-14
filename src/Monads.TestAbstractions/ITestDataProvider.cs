@@ -1,7 +1,6 @@
-﻿namespace Monads.TestAbstractions
+﻿namespace Monads.TestAbstractions;
+
+public interface ITestDataProvider
 {
-    public interface ITestDataProvider
-    {
-        object[] GetTestParameters();
-    }
+    object[] GetTestParameters();
 }

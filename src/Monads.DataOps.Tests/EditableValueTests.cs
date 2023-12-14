@@ -1,9 +1,8 @@
 using Monads.TestAbstractions;
 
-namespace Monads.DataOps.Tests
+namespace Monads.DataOps.Tests;
+
+public partial class EditableValueTests : TestsBase
 {
-    public partial class EditableValueTests : TestsBase
-    {
-        public EditableValueTests(TestFixture testFixture) : base(testFixture) { }
-    }
+    public EditableValueTests(TestFixture testFixture) : base(testFixture) { }
 }

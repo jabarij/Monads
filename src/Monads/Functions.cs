@@ -1,25 +1,24 @@
 ﻿using System;
 
-namespace Monads
+namespace Monads;
+
+public static class Functions
 {
-    public static class Functions
+    public static T Id<T>(T arg) =>
+        arg;
+
+    public static T? NullableId<T>(T arg) where T : struct =>
+        arg;
+
+    public static T SideEffect<T>(T arg, Action<T> sideEffect)
     {
-        public static T Id<T>(T arg) =>
-            arg;
-
-        public static T? NullableId<T>(T arg) where T : struct =>
-            arg;
-
-        public static T SideEffect<T>(T arg, Action<T> sideEffect)
-        {
-            sideEffect(arg);
-            return arg;
-        }
-
-        public static T ReturnDefault<T>() =>
-            default(T);
-
-        public static TOut ReturnDefault<TIn, TOut>(TIn _) =>
-            default(TOut);
+        sideEffect(arg);
+        return arg;
     }
+
+    public static T ReturnDefault<T>() =>
+        default;
+
+    public static TOut ReturnDefault<TIn, TOut>(TIn _) =>
+        default;
 }

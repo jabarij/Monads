@@ -1,9 +1,8 @@
 using Monads.TestAbstractions;
 
-namespace Monads.Tests
+namespace Monads.Tests;
+
+public partial class EitherTests : TestsBase
 {
-    public partial class EitherTests : TestsBase
-    {
-        public EitherTests(TestFixture testFixture) : base(testFixture) { }
-    }
+    public EitherTests(TestFixture testFixture) : base(testFixture) { }
 }

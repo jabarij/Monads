@@ -1,9 +1,8 @@
 using Monads.TestAbstractions;
 
-namespace Monads.Tests
+namespace Monads.Tests;
+
+public partial class MaybeTests : TestsBase
 {
-    public partial class MaybeTests : TestsBase
-    {
-        public MaybeTests(TestFixture testFixture) : base(testFixture) { }
-    }
+    public MaybeTests(TestFixture testFixture) : base(testFixture) { }
 }

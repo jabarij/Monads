@@ -1,12 +1,11 @@
-﻿namespace Monads
-{
-    public struct ResultError<T>
-    {
-        public ResultError(T result)
-        {
-            Result = result;
-        }
+﻿namespace Monads;
 
-        public T Result { get; }
+public struct ResultError<T>
+{
+    public ResultError(T result)
+    {
+        Result = result;
     }
+
+    public T Result { get; }
 }
